@@ -1,23 +1,20 @@
-# Composer profile comparison
+# Composer Profile Comparison
 
-Generated deterministically from `data/composers/*.json` via `structured_reflection` and `creative_concepts`.
+## Johann Sebastian Bach (bach)
 
-## Johann Sebastian Bach (`bach`)
-
-### From profile
-
-- **Display name:** Johann Sebastian Bach
-- **Life span:** 1685–1750
-
-**Public impression**
+### Public Impression
 
 Often seen as the supreme contrapuntist and systematizer of Lutheran sacred music, with encyclopedic command of forms familiar in his milieu.
 
-**Deeper dimensions**
+### Deeper Dimensions
 
 His surviving output also includes secular festive works, pedagogical collections, and a pragmatic responsiveness to employers and performing forces—creativity within institutional constraints as much as transcendence above them.
 
-### Structured reflection
+### Human Reflection Summary
+
+For Johann Sebastian Bach, aims like clarity of contrapuntal line within harmonic purpose and liturgical and pedagogical utility where relevant are set against a backdrop characterized as late Baroque, Central German Protestant musical culture; career centered on church, court, and collegium music in Leipzig and earlier posts. Often seen as the supreme contrapuntist and systematizer of Lutheran sacred music, with encyclopedic command of forms familiar in his milieu, while his surviving output also includes secular festive works, pedagogical collections, and a pragmatic responsiveness to employers and performing forces—creativity within institutional constraints as much as transcendence above them. Sonically the profile highlights contrapuntal saturation with functional harmony, motoric rhythmic drive in many instrumental genres, and chorale-based structures in sacred vocal works, although stylistic labels are broad and era-typical, anchoring practice in revision and repurposing of material across contexts and working within established genres (cantata cycle, suite, fugue) as creative frame — Concrete daily habits are not fully documented.
+
+### Reflection
 
 ```json
 {
@@ -79,62 +76,27 @@ His surviving output also includes secular festive works, pedagogical collection
 }
 ```
 
-### Creative concepts
+### Creative Concepts
 
-```json
-{
-  "composer_id": "bach",
-  "display_name": "Johann Sebastian Bach",
-  "concept_seeds": [
-    {
-      "index": 0,
-      "musical_element": "contrapuntal saturation with functional harmony",
-      "process_habit": "revision and repurposing of material across contexts",
-      "artistic_aim": "clarity of contrapuntal line within harmonic purpose",
-      "personality_trait": "disciplined"
-    },
-    {
-      "index": 1,
-      "musical_element": "motoric rhythmic drive in many instrumental genres",
-      "process_habit": "working within established genres (cantata cycle, suite, fugue) as creative frame",
-      "artistic_aim": "liturgical and pedagogical utility where relevant",
-      "personality_trait": "pragmatic within duty"
-    },
-    {
-      "index": 2,
-      "musical_element": "chorale-based structures in sacred vocal works",
-      "personality_trait": "intellectually intense"
-    }
-  ],
-  "narrative_hooks": {
-    "public_impression": "Often seen as the supreme contrapuntist and systematizer of Lutheran sacred music, with encyclopedic command of forms familiar in his milieu.",
-    "deeper_dimensions": "His surviving output also includes secular festive works, pedagogical collections, and a pragmatic responsiveness to employers and performing forces—creativity within institutional constraints as much as transcendence above them."
-  },
-  "style_and_process_notes": {
-    "musical_style_notes": "Stylistic labels are broad and era-typical; they summarize common textbook characterizations rather than claiming exhaustive uniqueness.",
-    "creative_process_notes": "Concrete daily habits are not fully documented; this section encodes plausible working patterns consistent with the surviving work corpus."
-  }
-}
-```
+1. artistic_aim="clarity of contrapuntal line within harmonic purpose", index=0, musical_element="contrapuntal saturation with functional harmony", personality_trait="disciplined", process_habit="revision and repurposing of material across contexts"
+2. artistic_aim="liturgical and pedagogical utility where relevant", index=1, musical_element="motoric rhythmic drive in many instrumental genres", personality_trait="pragmatic within duty", process_habit="working within established genres (cantata cycle, suite, fugue) as creative frame"
+3. index=2, musical_element="chorale-based structures in sacred vocal works", personality_trait="intellectually intense"
 
----
+## Ludwig van Beethoven (beethoven)
 
-## Ludwig van Beethoven (`beethoven`)
-
-### From profile
-
-- **Display name:** Ludwig van Beethoven
-- **Life span:** 1770–1827
-
-**Public impression**
+### Public Impression
 
 Widely seen as the isolated hero of struggle who forced music toward a new emotional scale—deafness, fist-shaking intensity, and the iconic profile of the artist against fate.
 
-**Deeper dimensions**
+### Deeper Dimensions
 
 Extensive sketch material and contemporaneous accounts point to iterative labor, negotiation with publishers and performers, and genre craft (string quartet, symphony, sonata) as disciplined workshops as much as spontaneous eruptions; social life was constrained yet networked, not purely solitary myth.
 
-### Structured reflection
+### Human Reflection Summary
+
+Ludwig van Beethoven is read alongside priorities such as expand classical forms through developmental drama and cyclic integration and articulate ethical-public address in certain choral and stage-adjacent projects, within a historical frame summarized as Viennese professional life spanning late classical syntax toward emphatic personal rhetoric in forms inherited from Haydn and Mozart; career shaped by patronage transitions, publishing, and concert life. Widely seen as the isolated hero of struggle who forced music toward a new emotional scale—deafness, fist-shaking intensity, and the iconic profile of the artist against fate; extensive sketch material and contemporaneous accounts point to iterative labor, negotiation with publishers and performers, and genre craft (string quartet, symphony, sonata) as disciplined workshops as much as spontaneous eruptions; social life was constrained yet networked. The sound-world associated with Ludwig van Beethoven turns on motivic development treated as narrative engine, accent and metric displacement heightening rhetorical drive, and expanded slow-movement lyricism alongside aggressive scherzo characters, although these are broad descriptors used in survey teaching; habitual labor keeps circling back to prolonged sketching and recombination before final scores and rethinking works for alternate performance contexts — Sketch studies underpin habit claims.
+
+### Reflection
 
 ```json
 {
@@ -196,62 +158,27 @@ Extensive sketch material and contemporaneous accounts point to iterative labor,
 }
 ```
 
-### Creative concepts
+### Creative Concepts
 
-```json
-{
-  "composer_id": "beethoven",
-  "display_name": "Ludwig van Beethoven",
-  "concept_seeds": [
-    {
-      "index": 0,
-      "musical_element": "motivic development treated as narrative engine",
-      "process_habit": "prolonged sketching and recombination before final scores",
-      "artistic_aim": "expand classical forms through developmental drama and cyclic integration",
-      "personality_trait": "stubborn on artistic priorities"
-    },
-    {
-      "index": 1,
-      "musical_element": "accent and metric displacement heightening rhetorical drive",
-      "process_habit": "rethinking works for alternate performance contexts",
-      "artistic_aim": "articulate ethical-public address in certain choral and stage-adjacent projects",
-      "personality_trait": "precise about intent in scores"
-    },
-    {
-      "index": 2,
-      "musical_element": "expanded slow-movement lyricism alongside aggressive scherzo characters",
-      "personality_trait": "volatile in documented relationships"
-    }
-  ],
-  "narrative_hooks": {
-    "public_impression": "Widely seen as the isolated hero of struggle who forced music toward a new emotional scale—deafness, fist-shaking intensity, and the iconic profile of the artist against fate.",
-    "deeper_dimensions": "Extensive sketch material and contemporaneous accounts point to iterative labor, negotiation with publishers and performers, and genre craft (string quartet, symphony, sonata) as disciplined workshops as much as spontaneous eruptions; social life was constrained yet networked, not purely solitary myth."
-  },
-  "style_and_process_notes": {
-    "musical_style_notes": "These are broad descriptors used in survey teaching; analytical nuance varies by piece and period.",
-    "creative_process_notes": "Sketch studies underpin habit claims; still, many daily choices remain invisible beyond what papers survive."
-  }
-}
-```
+1. artistic_aim="expand classical forms through developmental drama and cyclic integration", index=0, musical_element="motivic development treated as narrative engine", personality_trait="stubborn on artistic priorities", process_habit="prolonged sketching and recombination before final scores"
+2. artistic_aim="articulate ethical-public address in certain choral and stage-adjacent projects", index=1, musical_element="accent and metric displacement heightening rhetorical drive", personality_trait="precise about intent in scores", process_habit="rethinking works for alternate performance contexts"
+3. index=2, musical_element="expanded slow-movement lyricism alongside aggressive scherzo characters", personality_trait="volatile in documented relationships"
 
----
+## Frédéric Chopin (chopin)
 
-## Frédéric Chopin (`chopin`)
-
-### From profile
-
-- **Display name:** Frédéric Chopin
-- **Life span:** 1810–1849
-
-**Public impression**
+### Public Impression
 
 Often remembered as the archetypal composer of intimate piano lyricism: mazurkas, polonaises, nocturnes, and études associated with refinement, singing line, and national color.
 
-**Deeper dimensions**
+### Deeper Dimensions
 
 His artistic world also includes large-scale forms (ballades, scherzos, sonatas), formal experimentation within dance genres, and a documented engagement with pedagogy, orchestration in early works, and the economics of publishing and performance networks.
 
-### Structured reflection
+### Human Reflection Summary
+
+For Frédéric Chopin, aims like sustain vocal bel canto analogies in piano texture and embed folkloric gesture without reducing works to postcard nationalism are set against a backdrop characterized as Romantic piano culture centered on Paris salons, teaching, and publishing; Polish origin and diasporic identity are recurrent themes in reception and in his own letters and works. Often remembered as the archetypal composer of intimate piano lyricism: mazurkas, polonaises, nocturnes, and études associated with refinement, singing line, and national color, while his artistic world also includes large-scale forms (ballades, scherzos, sonatas), formal experimentation within dance genres, and a documented engagement with pedagogy, orchestration in early works, and the economics of publishing and performance networks. Sonically the profile highlights rubato treated as structural rather than merely ornamental in many works, ornamental variation across repeats and editions, and dance genres as carriers of large-scale drama as well as charm, although stylistic bullets summarize widely taught features, anchoring practice in revision visible across parallel versions and editions and workshop-like refinement in teaching contexts feeding public performance repertory — Process claims lean on edition scholarship and pedagogy traces.
+
+### Reflection
 
 ```json
 {
@@ -313,62 +240,27 @@ His artistic world also includes large-scale forms (ballades, scherzos, sonatas)
 }
 ```
 
-### Creative concepts
+### Creative Concepts
 
-```json
-{
-  "composer_id": "chopin",
-  "display_name": "Frédéric Chopin",
-  "concept_seeds": [
-    {
-      "index": 0,
-      "musical_element": "rubato treated as structural rather than merely ornamental in many works",
-      "process_habit": "revision visible across parallel versions and editions",
-      "artistic_aim": "sustain vocal bel canto analogies in piano texture",
-      "personality_trait": "meticulous about pianistic detail"
-    },
-    {
-      "index": 1,
-      "musical_element": "ornamental variation across repeats and editions",
-      "process_habit": "workshop-like refinement in teaching contexts feeding public performance repertory",
-      "artistic_aim": "embed folkloric gesture without reducing works to postcard nationalism",
-      "personality_trait": "socially selective"
-    },
-    {
-      "index": 2,
-      "musical_element": "dance genres as carriers of large-scale drama as well as charm",
-      "personality_trait": "proud of craft"
-    }
-  ],
-  "narrative_hooks": {
-    "public_impression": "Often remembered as the archetypal composer of intimate piano lyricism: mazurkas, polonaises, nocturnes, and études associated with refinement, singing line, and national color.",
-    "deeper_dimensions": "His artistic world also includes large-scale forms (ballades, scherzos, sonatas), formal experimentation within dance genres, and a documented engagement with pedagogy, orchestration in early works, and the economics of publishing and performance networks."
-  },
-  "style_and_process_notes": {
-    "musical_style_notes": "Stylistic bullets summarize widely taught features; they are not exhaustive and elide manuscript-editorial debates best handled outside this file.",
-    "creative_process_notes": "Process claims lean on edition scholarship and pedagogy traces; daily routines are not fully recoverable from sources."
-  }
-}
-```
+1. artistic_aim="sustain vocal bel canto analogies in piano texture", index=0, musical_element="rubato treated as structural rather than merely ornamental in many works", personality_trait="meticulous about pianistic detail", process_habit="revision visible across parallel versions and editions"
+2. artistic_aim="embed folkloric gesture without reducing works to postcard nationalism", index=1, musical_element="ornamental variation across repeats and editions", personality_trait="socially selective", process_habit="workshop-like refinement in teaching contexts feeding public performance repertory"
+3. index=2, musical_element="dance genres as carriers of large-scale drama as well as charm", personality_trait="proud of craft"
 
----
+## Wolfgang Amadeus Mozart (mozart)
 
-## Wolfgang Amadeus Mozart (`mozart`)
-
-### From profile
-
-- **Display name:** Wolfgang Amadeus Mozart
-- **Life span:** 1756–1791
-
-**Public impression**
+### Public Impression
 
 Popular memory emphasizes effortless melodic genius, the traveling childhood, and a near-mythic ease of composition—music as though dictated in full dress.
 
-**Deeper dimensions**
+### Deeper Dimensions
 
 Autograph evidence, correspondence about revisions, and simultaneous professional commitments indicate speed but not infallibility: negotiation with singers, dramaturgy in opera, and financial pressure are persistent background conditions, not just divine spontaneity.
 
-### Structured reflection
+### Human Reflection Summary
+
+Wolfgang Amadeus Mozart is read alongside priorities such as integrate vocal character and ensemble continuity in staged works and marshal contrapuntal learning within galant surface clarity, within a historical frame summarized as Mid-to-late eighteenth-century Austro-German musical theater, church, and chamber music; professional mobility across Salzburg, Vienna, and European courts shaped repertory and patronage. Popular memory emphasizes effortless melodic genius, the traveling childhood, and a near-mythic ease of composition—music as though dictated in full dress; autograph evidence, correspondence about revisions, and simultaneous professional commitments indicate speed but not infallibility: negotiation with singers, dramaturgy in opera, and financial pressure are persistent background conditions, not just divine spontaneity. The sound-world associated with Wolfgang Amadeus Mozart turns on singable periodic phrases with sophisticated underlying voice-leading, coloristic orchestration within classical ensemble norms, and dramatic pacing manipulations in ensemble finales, although brief labels for orientation; habitual labor keeps circling back to compose under production deadlines for opera and concert life and revise in response to performers and occasion — Supports a historically grounded view of craft under time pressure.
+
+### Reflection
 
 ```json
 {
@@ -430,42 +322,8 @@ Autograph evidence, correspondence about revisions, and simultaneous professiona
 }
 ```
 
-### Creative concepts
+### Creative Concepts
 
-```json
-{
-  "composer_id": "mozart",
-  "display_name": "Wolfgang Amadeus Mozart",
-  "concept_seeds": [
-    {
-      "index": 0,
-      "musical_element": "singable periodic phrases with sophisticated underlying voice-leading",
-      "process_habit": "compose under production deadlines for opera and concert life",
-      "artistic_aim": "integrate vocal character and ensemble continuity in staged works",
-      "personality_trait": "sharp ear for theater and social nuance"
-    },
-    {
-      "index": 1,
-      "musical_element": "coloristic orchestration within classical ensemble norms",
-      "process_habit": "revise in response to performers and occasion",
-      "artistic_aim": "marshal contrapuntal learning within galant surface clarity",
-      "personality_trait": "pride in rank and fee"
-    },
-    {
-      "index": 2,
-      "musical_element": "dramatic pacing manipulations in ensemble finales",
-      "personality_trait": "wit in letters that can read as abrasive or playful depending on context"
-    }
-  ],
-  "narrative_hooks": {
-    "public_impression": "Popular memory emphasizes effortless melodic genius, the traveling childhood, and a near-mythic ease of composition—music as though dictated in full dress.",
-    "deeper_dimensions": "Autograph evidence, correspondence about revisions, and simultaneous professional commitments indicate speed but not infallibility: negotiation with singers, dramaturgy in opera, and financial pressure are persistent background conditions, not just divine spontaneity."
-  },
-  "style_and_process_notes": {
-    "musical_style_notes": "Brief labels for orientation; analytical detail belongs in specialized writing, not in this capsule.",
-    "creative_process_notes": "Supports a historically grounded view of craft under time pressure; contrasts with folklore of faultless first drafts."
-  }
-}
-```
-
----
+1. artistic_aim="integrate vocal character and ensemble continuity in staged works", index=0, musical_element="singable periodic phrases with sophisticated underlying voice-leading", personality_trait="sharp ear for theater and social nuance", process_habit="compose under production deadlines for opera and concert life"
+2. artistic_aim="marshal contrapuntal learning within galant surface clarity", index=1, musical_element="coloristic orchestration within classical ensemble norms", personality_trait="pride in rank and fee", process_habit="revise in response to performers and occasion"
+3. index=2, musical_element="dramatic pacing manipulations in ensemble finales", personality_trait="wit in letters that can read as abrasive or playful depending on context"
