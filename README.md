@@ -26,6 +26,46 @@ Shipped example profiles live in `data/composers/`:
 
 Add new files as `{id}.json` where `id` matches the `id` field inside the JSON.
 
+## Pipeline
+
+Data flows in one direction: validate early, derive text only from loaded profiles, expose via CLI or markdown.
+
+```mermaid
+flowchart LR
+  JSON["data/composers/*.json"] --> Validate["validate_profile"]
+  Validate --> Load["load_profile"]
+  Load --> Reflect["structured_reflection + human_reflection_summary"]
+  Load --> Concepts["creative_concepts"]
+  Reflect --> Out["CLI / outputs/profile_comparison.md"]
+  Concepts --> Out
+```
+
+## Example output
+
+### CLI: human reflection summary
+
+From the repo root (with venv activated):
+
+```bash
+python -m app.cli show chopin
+```
+
+That prints a short, deterministic prose summary built only from the Chopin profile—no LLM. Example (current generator; yours may match after data tweaks):
+
+```text
+For Frédéric Chopin, aims like sustain vocal bel canto analogies in piano texture and embed folkloric gesture without reducing works to postcard nationalism are set against a backdrop characterized as Romantic piano culture centered on Paris salons, teaching, and publishing; Polish origin and diasporic identity are recurrent themes in reception and in his own letters and works. Often remembered as the archetypal composer of intimate piano lyricism: mazurkas, polonaises, nocturnes, and études associated with refinement, singing line, and national color, while his artistic world also includes large-scale forms (ballades, scherzos, sonatas), formal experimentation within dance genres, and a documented engagement with pedagogy, orchestration in early works, and the economics of publishing and performance networks. Sonically the profile highlights rubato treated as structural rather than merely ornamental in many works, ornamental variation across repeats and editions, and dance genres as carriers of large-scale drama as well as charm, although stylistic bullets summarize widely taught features, anchoring practice in revision visible across parallel versions and editions and workshop-like refinement in teaching contexts feeding public performance repertory — Process claims lean on edition scholarship and pedagogy traces.
+```
+
+### Full comparison artifact
+
+For JSON reflection, human summary, and numbered creative-concept seeds for **all** composers:
+
+```bash
+python -m app.cli compare
+```
+
+Open `outputs/profile_comparison.md`.
+
 ## Setup and tests
 
 ```bash
