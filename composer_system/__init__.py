@@ -1,5 +1,6 @@
 """Historically grounded composer profiles: load, validate, reflect, create."""
 
+from composer_system.brief import get_brief
 from composer_system.creation import creative_concepts
 from composer_system.exceptions import ComposerSystemError, ProfileLoadError, ProfileValidationError
 from composer_system.load import load_profile
@@ -13,6 +14,7 @@ __all__ = [
     "ProfileLoadError",
     "ProfileValidationError",
     "creative_concepts",
+    "get_brief",
     "load_profile",
     "profile_json_schema",
     "structured_reflection",
