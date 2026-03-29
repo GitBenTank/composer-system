@@ -1,0 +1,191 @@
+{
+  "$defs": {
+    "ArtisticIdentity": {
+      "properties": {
+        "aims": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 64,
+          "title": "Aims",
+          "type": "array"
+        },
+        "notes": {
+          "default": "",
+          "maxLength": 20000,
+          "title": "Notes",
+          "type": "string"
+        }
+      },
+      "title": "ArtisticIdentity",
+      "type": "object"
+    },
+    "CreativeProcess": {
+      "properties": {
+        "habits": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 64,
+          "title": "Habits",
+          "type": "array"
+        },
+        "notes": {
+          "default": "",
+          "maxLength": 20000,
+          "title": "Notes",
+          "type": "string"
+        }
+      },
+      "title": "CreativeProcess",
+      "type": "object"
+    },
+    "LifeSpan": {
+      "properties": {
+        "birth_year": {
+          "anyOf": [
+            {
+              "maximum": 2100,
+              "minimum": 1000,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Birth Year"
+        },
+        "death_year": {
+          "anyOf": [
+            {
+              "maximum": 2100,
+              "minimum": 1000,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Death Year"
+        }
+      },
+      "title": "LifeSpan",
+      "type": "object"
+    },
+    "MusicalStyle": {
+      "properties": {
+        "characteristic_elements": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 64,
+          "title": "Characteristic Elements",
+          "type": "array"
+        },
+        "notes": {
+          "default": "",
+          "maxLength": 20000,
+          "title": "Notes",
+          "type": "string"
+        }
+      },
+      "title": "MusicalStyle",
+      "type": "object"
+    },
+    "Personality": {
+      "properties": {
+        "traits": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 64,
+          "title": "Traits",
+          "type": "array"
+        },
+        "notes": {
+          "default": "",
+          "maxLength": 20000,
+          "title": "Notes",
+          "type": "string"
+        }
+      },
+      "title": "Personality",
+      "type": "object"
+    }
+  },
+  "description": "Structured creative identity for a historically grounded composer.\n\nInterpretive fields should stay clearly separated from well-attested facts;\nuse ``source_notes`` to document epistemic stance where helpful.",
+  "properties": {
+    "schema_version": {
+      "default": "1.0",
+      "description": "Schema version for migration and tooling.",
+      "pattern": "^1\\.\\d+$",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "id": {
+      "description": "Stable slug, ASCII lowercase.",
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^[a-z][a-z0-9_-]*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "display_name": {
+      "maxLength": 256,
+      "minLength": 1,
+      "title": "Display Name",
+      "type": "string"
+    },
+    "life_span": {
+      "$ref": "#/$defs/LifeSpan"
+    },
+    "era_context": {
+      "default": "",
+      "description": "Brief historical/cultural framing; keep claims cautious.",
+      "maxLength": 20000,
+      "title": "Era Context",
+      "type": "string"
+    },
+    "public_impression": {
+      "default": "",
+      "description": "How the figure is often perceived in public memory.",
+      "maxLength": 20000,
+      "title": "Public Impression",
+      "type": "string"
+    },
+    "deeper_dimensions": {
+      "default": "",
+      "description": "Nuanced traits beyond caricature.",
+      "maxLength": 20000,
+      "title": "Deeper Dimensions",
+      "type": "string"
+    },
+    "personality": {
+      "$ref": "#/$defs/Personality"
+    },
+    "artistic_identity": {
+      "$ref": "#/$defs/ArtisticIdentity"
+    },
+    "musical_style": {
+      "$ref": "#/$defs/MusicalStyle"
+    },
+    "creative_process": {
+      "$ref": "#/$defs/CreativeProcess"
+    },
+    "source_notes": {
+      "default": "",
+      "description": "What is well-attested vs interpretive; avoid overstating certainty.",
+      "maxLength": 20000,
+      "title": "Source Notes",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "display_name"
+  ],
+  "title": "ComposerProfile",
+  "type": "object"
+}
