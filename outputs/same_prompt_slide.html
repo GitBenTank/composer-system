@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Same Prompt · Different Minds</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,500;0,9..40,600;1,9..40,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #060608;
+      --grid: rgba(255, 255, 255, 0.06);
+      --text: #e8e6e3;
+      --muted: #8a8680;
+      --haydn: #5fd4a4;
+      --beethoven: #ff6b35;
+      --chopin: #9b8cff;
+      --panel: rgba(20, 20, 24, 0.92);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 48px 48px;
+      color: var(--text);
+      font-family: "DM Sans", system-ui, sans-serif;
+      font-optical-sizing: auto;
+      padding: 2.5rem 2rem 3rem;
+    }
+
+    .frame {
+      max-width: 1200px;
+      margin: 0 auto;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 4px;
+      padding: 2rem 2.25rem 1.75rem;
+      background: radial-gradient(ellipse 120% 80% at 50% -20%, rgba(95, 212, 164, 0.08), transparent 55%),
+                  radial-gradient(ellipse 80% 60% at 100% 50%, rgba(255, 107, 53, 0.06), transparent 45%),
+                  var(--panel);
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 24px 80px rgba(0, 0, 0, 0.55);
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 1.75rem;
+    }
+
+    header h1 {
+      font-size: clamp(1.65rem, 4vw, 2.35rem);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+    }
+
+    header p.sub {
+      margin-top: 0.45rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .meta {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(200px, 220px) 1fr;
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+
+    .intent-panel {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 3px;
+      padding: 1.25rem 1.1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.85rem;
+      background: rgba(0, 0, 0, 0.35);
+    }
+
+    .intent-panel .label {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .intent-panel pre {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.78rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      color: var(--text);
+    }
+
+    .arrow {
+      font-family: "IBM Plex Mono", monospace;
+      color: var(--muted);
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    .columns {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    @media (max-width: 900px) {
+      .columns { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      border-radius: 3px;
+      padding: 1.15rem 1rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.25);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      opacity: 0.95;
+    }
+
+    .card.haydn::before { background: var(--haydn); box-shadow: 0 0 18px rgba(95, 212, 164, 0.35); }
+    .card.beethoven::before { background: var(--beethoven); box-shadow: 0 0 18px rgba(255, 107, 53, 0.35); }
+    .card.chopin::before { background: var(--chopin); box-shadow: 0 0 18px rgba(155, 140, 255, 0.35); }
+
+    .card h2 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 0.65rem;
+    }
+
+    .card.haydn h2 { color: var(--haydn); }
+    .card.beethoven h2 { color: var(--beethoven); }
+    .card.chopin h2 { color: var(--chopin); }
+
+    .card h3 {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      margin: 0.5rem 0 0.35rem;
+    }
+
+    .card ul {
+      font-size: 0.78rem;
+      line-height: 1.45;
+      padding-left: 1rem;
+      color: #c9c5bf;
+    }
+
+    .card ul li { margin-bottom: 0.25rem; }
+
+    .snippet {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.66rem;
+      line-height: 1.55;
+      color: #b5b0a8;
+      margin-top: 0.35rem;
+      padding: 0.6rem 0.55rem;
+      background: rgba(0, 0, 0, 0.45);
+      border-radius: 2px;
+      border-left: 2px solid rgba(255, 255, 255, 0.15);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .card.haydn .snippet { border-left-color: var(--haydn); }
+    .card.beethoven .snippet { border-left-color: var(--beethoven); }
+    .card.chopin .snippet { border-left-color: var(--chopin); }
+
+    footer {
+      margin-top: 1.5rem;
+      text-align: center;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <header>
+      <h1>Same prompt. Different minds.</h1>
+      <p class="sub">Structured composer-aware prompting system</p>
+    </header>
+
+    <p class="meta">Source: composer-runtime <code>full_chain.py</code> · intent locked · data from <code>music_prompt.constraints</code> + <code>generator_prompt</code> “Sonic and formal targets” clause · 2026-03-29</p>
+
+    <div class="layout">
+      <aside class="intent-panel">
+        <div class="label">User intent</div>
+        <pre>playful symphony
+with unexpected turns</pre>
+        <div class="arrow">&gt; profile + seed row + constraints</div>
+      </aside>
+
+      <div class="columns">
+        <article class="card haydn">
+          <h2>Haydn</h2>
+          <h3>Constraints · composer tail</h3>
+          <ul>
+            <li>Carry wit through phrase rhythm, conversational orchestration, and timing of <strong>cadential surprises</strong>; prefer clarified dialogue over continuous saturated wash.</li>
+            <li>Treat small <strong>motivic cells</strong> as plastic: develop through reorder, fragment, extension, and surprise closure rather than through unbroken lyric span alone.</li>
+          </ul>
+          <h3>Prompt snippet · sonic targets (verbatim clause)</h3>
+          <div class="snippet">classical phrase architecture with playful metric and cadential surprises | orchestral and quartet textures that clarify conversation between voices | developmental thinking that often treats small cells as generative seeds</div>
+        </article>
+
+        <article class="card beethoven">
+          <h2>Beethoven</h2>
+          <h3>Constraints · composer tail</h3>
+          <ul>
+            <li>Let <strong>developmental drama</strong> and <strong>motivic narrative</strong> drive form; metric stress and registral spacing should clarify rhetorical intent.</li>
+            <li>Treat cyclical or integrative aims as structural glue—returns and transformations should be <strong>traceable in the score</strong>, not only implied.</li>
+          </ul>
+          <h3>Prompt snippet · sonic targets (verbatim clause)</h3>
+          <div class="snippet">motivic development treated as narrative engine | accent and metric displacement heightening rhetorical drive | expanded slow-movement lyricism alongside aggressive scherzo characters</div>
+        </article>
+
+        <article class="card chopin">
+          <h2>Chopin</h2>
+          <h3>Constraints · composer tail</h3>
+          <ul>
+            <li>Treat <strong>rubato</strong> and <strong>ornamental variation</strong> as structural parameters, not only surface decoration; phrase ends and repeats are opportunities for directed remaking.</li>
+            <li>Dance genres may carry large-scale tension; keep <strong>bass–melody dialogue</strong> and <strong>pianistic voicing</strong> explicit in specification.</li>
+          </ul>
+          <h3>Prompt snippet · sonic targets (verbatim clause)</h3>
+          <div class="snippet">rubato treated as structural rather than merely ornamental in many works | ornamental variation across repeats and editions | dance genres as carriers of large-scale drama as well as charm</div>
+        </article>
+      </div>
+    </div>
+
+    <footer>Not style imitation — constraint-driven reinterpretation</footer>
+  </div>
+</body>
+</html>

@@ -26,3 +26,20 @@ def test_human_summary_avoids_stale_template_phrases(composer_id: str) -> None:
     lower = text.lower()
     for bad in _BANNED_SUBSTRINGS:
         assert bad.lower() not in lower, f"{composer_id}: summary must not contain {bad!r}"
+
+
+@pytest.mark.parametrize("composer_id", ["bach", "chopin"])
+def test_human_reflection_summary_is_deterministic(composer_id: str) -> None:
+    profile = load_profile(composer_id, data_dir=_DATA)
+    a = human_reflection_summary(profile)
+    b = human_reflection_summary(profile)
+    assert a == b
+    assert len(a) > 40
+
+
+def test_human_reflection_summary_each_canonical_profile_non_empty() -> None:
+    for cid in ("bach", "beethoven", "chopin", "mozart"):
+        profile = load_profile(cid, data_dir=_DATA)
+        text = human_reflection_summary(profile)
+        assert text.count(".") >= 1
+        assert len(text) > 80

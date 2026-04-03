@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 from typing import Any
 
 from composer_system.models import ComposerProfile
@@ -39,124 +40,143 @@ def human_reflection_summary(profile: ComposerProfile) -> str:
     """
     Short prose that weaves profile fields into a coherent creative identity.
 
-    Uses only data present on the profile; favors varied pacing, sound wrapped
-    with its caveats, and reception set against depth—without extra-template
-    phrasing between composers.
+    Uses only data present on the profile. Wording varies by composer id so
+    adjacent figures do not read as copy-pasted; about two to four sentences.
     """
     name = profile.display_name
-    v = sum(ord(c) for c in profile.id) % 3
+
     sentences: list[str] = []
 
-    era = _first_sentence_complete(profile.era_context)
-    aims = [a.strip() for a in profile.artistic_identity.aims if a.strip()]
-    aim_phrase = _join_phrases(aims[:2])
-    milieu = _milieu_sentence(name, era, aim_phrase, v)
-    if milieu:
-        sentences.append(milieu)
+    s_open = _summary_opening(name, profile)
+    if s_open:
+        sentences.extend(s_open)
 
-    pub = _first_sentence_complete(profile.public_impression)
-    deep = _first_sentence_complete(profile.deeper_dimensions)
-    recv = _reception_sentence(pub, deep, v)
-    if recv:
-        sentences.append(recv)
+    s_recv = _summary_reception(profile)
+    if s_recv:
+        sentences.extend(s_recv)
 
-    craft = _sound_and_work_sentence(profile, name, v)
-    if craft:
-        sentences.append(craft)
+    s_craft = _summary_craft(name, profile)
+    if s_craft:
+        sentences.append(s_craft)
 
+    s_traits = _summary_traits(profile, len(sentences))
+    if s_traits and len(sentences) < 4:
+        sentences.append(s_traits)
+
+    sentences = [s.strip() for s in sentences if s.strip()]
     if not sentences:
         return (
             f"{name} is represented by a sparse profile; add era, impression, style, "
             "and process fields to articulate a fuller creative identity."
         )
 
-    text = " ".join(sentences)
-    parts = _split_sentences(text)
-    if len(parts) > 4:
-        parts = parts[:4]
-    return " ".join(parts).strip()
+    if len(sentences) > 4:
+        sentences = sentences[:4]
+    return " ".join(sentences).strip()
 
 
-def _milieu_sentence(name: str, era: str, aim_phrase: str, v: int) -> str:
-    if era and aim_phrase:
-        era_core = _strip_period(_clause_from_text(era, max_len=220))
+def _voice_mod(profile: ComposerProfile, m: int) -> int:
+    return int(hashlib.sha256(profile.id.encode()).hexdigest()[:8], 16) % max(m, 1)
+
+
+def _era_core(profile: ComposerProfile, max_len: int) -> str:
+    era = profile.era_context.strip()
+    if not era:
+        return ""
+    return _strip_period(_clause_from_text(era, max_len=max_len))
+
+
+def _summary_opening(name: str, profile: ComposerProfile) -> list[str]:
+    era_c = _era_core(profile, 190)
+    aims_raw = [a.strip() for a in profile.artistic_identity.aims if a.strip()]
+    aims = _join_phrases(aims_raw[:2])
+
+    if not era_c and not aims:
+        return []
+
+    v = _voice_mod(profile, 5)
+
+    if era_c and aims:
         if v == 0:
-            return (
-                f"{name} is read alongside priorities such as {aim_phrase}, "
-                f"within a historical frame summarized as {era_core}."
-            )
+            return [
+                _fused_period(
+                    f"{name} is charted against {era_c}",
+                    f"named ambitions include {aims}",
+                )
+            ]
         if v == 1:
-            return (
-                f"Within a milieu described as {era_core}, this portrait highlights "
-                f"aims including {aim_phrase} for {name}."
-            )
-        return (
-            f"For {name}, aims like {aim_phrase} are set against a backdrop "
-            f"characterized as {era_core}."
-        )
-    if era:
-        era_snip = _strip_period(_clause_from_text(era, max_len=220))
-        return f"The surrounding context for {name} is summarized as {era_snip}."
-    if aim_phrase:
-        return f"The artistic priorities emphasized for {name} include {aim_phrase}."
-    return ""
+            return [f"In this construction, {name} is positioned within {era_c}, pursuing {aims}."]
+        if v == 2:
+            return [
+                f"{_capitalize_first(era_c)}.",
+                f"{name} is credited here with aims such as {aims}.",
+            ]
+        if v == 3:
+            return [f"{name} moves inside a horizon described as {era_c}; priorities listed are {aims}."]
+        return [f"Working assumptions about setting: {era_c}. Creative targets emphasized: {aims}."]
+
+    if era_c:
+        if v % 2 == 0:
+            return [f"{name} is framed chiefly through {_capitalize_first(era_c)}."]
+        return [f"The historical setting sketched for {name} is {_capitalize_first(era_c)}."]
+    return [f"Stated aims for {name} center on {aims}."]
 
 
-def _reception_sentence(pub: str, deep: str, v: int) -> str:
+def _summary_reception(profile: ComposerProfile) -> list[str]:
+    pub = _first_sentence_complete(profile.public_impression)
+    deep = _first_sentence_complete(profile.deeper_dimensions)
+    if not pub and not deep:
+        return []
+
+    v = _voice_mod(profile, 4)
+
     if pub and deep:
         p = _strip_period(pub)
         d = _strip_period(deep)
         if v == 0:
-            return f"{p}; {_lower_first(d)}."
+            return [_fused_period(p, _lower_first(d))]
         if v == 1:
-            return f"{p}, though {_lower_first(d)}."
-        return f"{p}, while {_lower_first(d)}."
+            return [f"{p}, even as {_lower_first(d)}."]
+        if v == 2:
+            return [f"{_ensure_period(p)} {_ensure_period(_capitalize_first(d))}"]
+        return [f"A shorthand reception: {p}; a counterbalance in this file: {_lower_first(d)}."]
+
     if pub:
-        return pub
-    if deep:
-        return deep
-    return ""
+        return [pub]
+    return [deep]
 
 
-def _sound_and_work_sentence(profile: ComposerProfile, name: str, v: int) -> str:
+def _summary_craft(name: str, profile: ComposerProfile) -> str:
     elements = [s.strip() for s in profile.musical_style.characteristic_elements if s.strip()]
-    style_notes = profile.musical_style.notes.strip()
     habits = [h.strip() for h in profile.creative_process.habits if h.strip()]
+    style_notes = profile.musical_style.notes.strip()
     proc_notes = profile.creative_process.notes.strip()
 
     core = _join_phrases(elements[:3])
     habit_str = _join_phrases(habits[:2])
-    qual = _qualification_tail(style_notes)
-    proc_d = _process_tail(proc_notes)
+    v = _voice_mod(profile, 3)
 
     if core and habit_str:
         if v == 0:
-            return (
-                f"The sound-world associated with {name} turns on {core}{qual}; "
-                f"habitual labor keeps circling back to {habit_str}{proc_d}."
-            )
+            return f"Stylistic bullets highlight {core}. Described working routines return to {habit_str}."
         if v == 1:
-            return (
-                f"{name}'s sonic fingerprint, in this reading, is built from {core}{qual}; "
-                f"day-to-day work reverts again to {habit_str}{proc_d}."
-            )
-        return (
-            f"Sonically the profile highlights {core}{qual}, "
-            f"anchoring practice in {habit_str}{proc_d}."
-        )
+            return f"The musical checklist stresses {core}; habits on record include {habit_str}."
+        return f"Under style, {name} is tied to {core}; under process, the profile repeats {habit_str}."
 
-    if core and qual:
-        return f"The sonic emphasis falls on {core}{qual}."
     if core:
-        return f"The sonic emphasis falls on {core}."
-    if habit_str and proc_d:
-        return (
-            f"In the workshop, {name} is sketched as moving between {habit_str}{proc_d}."
-        )
-    if habit_str and qual:
-        return f"Recurring working motions pivot on {habit_str}{qual}."
+        snip = _strip_period(_primary_clause(style_notes, max_len=140)) if style_notes else ""
+        if snip:
+            if v % 2 == 0:
+                return _fused_period(f"Listeners model {name} through {core}", snip.lower())
+            return f"Musical emphases cluster on {core}, qualified by the note that {snip.lower()}."
+        return f"Musical emphases cluster on {core}."
+
     if habit_str:
-        return f"Recurring working motions pivot on {habit_str}."
+        pn = _strip_period(_primary_clause(proc_notes, max_len=140)) if proc_notes else ""
+        if pn:
+            return f"Habitual motion circles {habit_str}; commentary adds that {pn.lower()}."
+        return f"Habitual motion in the dossier centers on {habit_str}."
+
     if style_notes:
         return _first_sentence_complete(style_notes)
     if proc_notes:
@@ -164,24 +184,35 @@ def _sound_and_work_sentence(profile: ComposerProfile, name: str, v: int) -> str
     return ""
 
 
-def _qualification_tail(notes: str, *, max_len: int = 170) -> str:
-    if not notes:
+def _summary_traits(profile: ComposerProfile, already: int) -> str:
+    traits = [t.strip() for t in profile.personality.traits if t.strip()]
+    if not traits:
         return ""
-    clause = _primary_clause(notes, max_len=max_len)
-    if not clause:
+    if already >= 3:
         return ""
-    body = _lower_first(_strip_period(clause))
-    return f", although {body}"
+
+    trait_line = _join_phrases(traits[:3])
+    v = _voice_mod(profile, 2)
+    if v == 0:
+        return f"Personality tags sketched in this file include {trait_line}."
+    return f"Traits on record read: {trait_line}."
 
 
-def _process_tail(proc_notes: str, *, max_len: int = 170) -> str:
-    if not proc_notes:
-        return ""
-    clause = _primary_clause(proc_notes, max_len=max_len)
-    if not clause:
-        return ""
-    c = _strip_period(clause.strip())
-    return f" — {c}"
+def _fused_period(a: str, b: str) -> str:
+    aa = _strip_period(a.strip())
+    bb = b.strip()
+    if not bb:
+        return _ensure_period(aa)
+    if not aa:
+        return _ensure_period(bb)
+    return f"{aa}; {bb}."
+
+
+def _capitalize_first(s: str) -> str:
+    s = s.strip()
+    if not s:
+        return s
+    return s[0].upper() + s[1:]
 
 
 def _primary_clause(text: str, *, max_len: int) -> str:
@@ -197,17 +228,6 @@ def _primary_clause(text: str, *, max_len: int) -> str:
     if len(base) > max_len:
         return _clip_at_boundary(_strip_period(base), max_len)
     return base
-
-
-def _clause_from_text(text: str, max_len: int) -> str:
-    """Pull a bounded, grammatical clause without dangling ellipses."""
-    sent = _first_sentence_complete(text)
-    if len(sent) <= max_len:
-        return sent
-    punct = _cut_at_punctuation(text, max_len)
-    if punct:
-        return punct
-    return _clip_at_boundary(text, max_len)
 
 
 def _prompt_fragments(profile: ComposerProfile) -> list[str]:
@@ -280,6 +300,17 @@ def _clip_at_boundary(text: str, max_len: int) -> str:
     return _ensure_period(chunk)
 
 
+def _clause_from_text(text: str, max_len: int) -> str:
+    """Pull a bounded, grammatical clause without dangling ellipses."""
+    sent = _first_sentence_complete(text)
+    if len(sent) <= max_len:
+        return sent
+    punct = _cut_at_punctuation(text, max_len)
+    if punct:
+        return punct
+    return _clip_at_boundary(text, max_len)
+
+
 def _ensure_period(s: str) -> str:
     s = s.strip()
     if not s:
@@ -314,20 +345,3 @@ def _join_phrases(items: list[str]) -> str:
     if len(cleaned) == 2:
         return f"{cleaned[0]} and {cleaned[1]}"
     return ", ".join(cleaned[:-1]) + f", and {cleaned[-1]}"
-
-
-def _split_sentences(text: str) -> list[str]:
-    out: list[str] = []
-    buf: list[str] = []
-    i = 0
-    t = text.strip()
-    while i < len(t):
-        buf.append(t[i])
-        if t[i] in ".!?" and (i + 1 >= len(t) or t[i + 1].isspace()):
-            out.append("".join(buf).strip())
-            buf = []
-        i += 1
-    tail = "".join(buf).strip()
-    if tail:
-        out.append(tail)
-    return [s for s in out if s]
